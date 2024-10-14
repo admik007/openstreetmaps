@@ -37,3 +37,101 @@ su postgres -c "pg_dump -a world > /maps_source/slovakia.psql"
 
 # Restore PSQL
 psql -d world -f /maps_source/slovakia.psql
+
+
+osm2pgsql version 0.92.0 (64 bit id space)
+
+Using built-in tag processing pipeline
+Using projection SRS 3857 (Spherical Mercator)
+Setting up table: planet_osm_point
+Setting up table: planet_osm_line
+Setting up table: planet_osm_polygon
+Setting up table: planet_osm_roads
+Allocating memory for sparse node cache
+Node-cache: cache=1024MB, maxblocks=16384*65536, allocation method=9
+Mid: pgsql, scale=100 cache=1024
+Setting up table: planet_osm_nodes
+Setting up table: planet_osm_ways
+Setting up table: planet_osm_rels
+
+Reading in file: /var/www/html/slovakia-latest.osm.pbf
+Using PBF parser.
+Processing: Node(31603k 279.7k/s) Way(3973k 55.18k/s) Relation(61790 191.89/s)  parse time: 507s
+Node stats: total(31603621), max(12249023703) in 113s
+Way stats: total(3973021), max(1323696871) in 72s
+Relation stats: total(61799), max(18158536) in 322s
+Committing transaction for planet_osm_point
+Committing transaction for planet_osm_line
+Committing transaction for planet_osm_polygon
+Committing transaction for planet_osm_roads
+Setting up table: planet_osm_nodes
+Setting up table: planet_osm_ways
+Setting up table: planet_osm_rels
+Using built-in tag processing pipeline
+
+Going over pending ways...
+        2983093 ways are pending
+
+Using 1 helper-processes
+Finished processing 2983093 ways in 1516 s
+
+2983093 Pending ways took 1516s at a rate of 1967.74/s
+Committing transaction for planet_osm_point
+Committing transaction for planet_osm_line
+Committing transaction for planet_osm_polygon
+Committing transaction for planet_osm_roads
+
+Going over pending relations...
+        0 relations are pending
+
+Using 1 helper-processes
+Finished processing 0 relations in 0 s
+
+Committing transaction for planet_osm_point
+WARNING:  there is no transaction in progress
+Committing transaction for planet_osm_line
+WARNING:  there is no transaction in progress
+Committing transaction for planet_osm_polygon
+WARNING:  there is no transaction in progress
+Committing transaction for planet_osm_roads
+WARNING:  there is no transaction in progress
+Sorting data and creating indexes for planet_osm_point
+Stopping table: planet_osm_nodes
+Stopped table: planet_osm_nodes in 0s
+Stopping table: planet_osm_ways
+Building index on table: planet_osm_ways
+Stopping table: planet_osm_rels
+Building index on table: planet_osm_rels
+Stopped table: planet_osm_rels in 5s
+Copying planet_osm_point to cluster by geometry finished
+Creating geometry index on planet_osm_point
+Creating osm_id index on planet_osm_point
+Creating indexes on planet_osm_point finished
+All indexes on planet_osm_point created in 23s
+Completed planet_osm_point
+Sorting data and creating indexes for planet_osm_line
+Copying planet_osm_line to cluster by geometry finished
+Creating geometry index on planet_osm_line
+Creating osm_id index on planet_osm_line
+Creating indexes on planet_osm_line finished
+All indexes on planet_osm_line created in 53s
+Completed planet_osm_line
+Sorting data and creating indexes for planet_osm_polygon
+Copying planet_osm_polygon to cluster by geometry finished
+Creating geometry index on planet_osm_polygon
+Creating osm_id index on planet_osm_polygon
+Creating indexes on planet_osm_polygon finished
+All indexes on planet_osm_polygon created in 157s
+Completed planet_osm_polygon
+Sorting data and creating indexes for planet_osm_roads
+Copying planet_osm_roads to cluster by geometry finished
+Creating geometry index on planet_osm_roads
+Creating osm_id index on planet_osm_roads
+Creating indexes on planet_osm_roads finished
+All indexes on planet_osm_roads created in 4s
+Completed planet_osm_roads
+Stopped table: planet_osm_ways in 284s
+node cache: stored: 31603621(100.00%), storage efficiency: 50.00% (dense blocks: 0, sparse nodes: 31603621), hit rate: 100.00%
+
+Osm2pgsql took 2308s overall
+
