@@ -39,6 +39,19 @@ su postgres -c "pg_dump -a world > /maps_source/slovakia.psql"
 psql -d world -f /maps_source/slovakia.psql
 
 
+
+
+
+
+echo "#Debian 9" > /etc/apt/sources.list
+echo "deb http://archive.debian.org/debian/ stretch main contrib non-free" >> /etc/apt/sources.list
+echo "deb-src http://archive.debian.org/debian/ stretch main contrib non-free" >> /etc/apt/sources.list
+apt-get install php
+
+
+
+
+
 osm2pgsql version 0.92.0 (64 bit id space)
 
 Using built-in tag processing pipeline
