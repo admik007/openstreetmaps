@@ -19,6 +19,10 @@ Import continet, or country
 ```
 su osm -c "osm2pgsql --slim --database world --cache 2048 --cache-strategy sparse --hstore --style /home/osm/openstreetmap-carto/openstreetmap-carto.style /PATH_FOR_FILE/FILENAME.osm.pbf"
 ```
+Import psql files into existing DB
+```
+gosu postgres psql -f /PATH_FOR_FILE/FILENAME.psql
+```
 Usefull links
 ```
 https://download.geofabrik.de/
