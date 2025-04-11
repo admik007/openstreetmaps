@@ -25,6 +25,11 @@ if [ ! -f /var/www/html/leaflet.js ]; then
  cp /var/www/html_bak/leaflet.js /var/www/html/leaflet.js
 fi
 
+if [ ! -d /var/lib/mod_tile/default ]; then
+ mkdir -p /var/lib/mod_tile/default/
+ chmod 777 /var/lib/mod_tile/default/
+fi
+
 /etc/init.d/postgresql restart
 sleep 5
 /etc/init.d/renderd restart
