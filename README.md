@@ -37,3 +37,9 @@ Show status of rendered map
 ```
 cat /var/run/renderd/renderd.stats | grep -v ": 0"
 ```
+Merge more countries into one
+```
+apt-get install osmium-tool
+osmium merge country_1.osm.pbf country_2.osm.pbf -o final_country.osm.pbf
+```
+
