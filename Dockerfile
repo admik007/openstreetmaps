@@ -15,7 +15,7 @@ deb http://archive.debian.org/debian/ buster-proposed-updates main contrib non-f
 
 RUN apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade
 #RUN apt-get -y install apache2 apache2-bin apache2-dev postgresql-9.6-postgis-2.3 postgresql-contrib-9.6 git vim wget curl screen gosu unzip autoconf 
-RUN apt-get -y install apache2 apache2-bin apache2-dev postgresql-postgis postgresql-contrib git vim wget curl screen gosu unzip autoconf 
+RUN apt-get -y install apache2 apache2-bin apache2-dev php postgresql-postgis postgresql-contrib git vim wget curl screen gosu unzip autoconf 
 RUN apt-get -y install osm2pgsql libtool libmapnik-dev gdal-bin mapnik-utils node-carto 
 
 RUN sed -i 's/max_connections = 100/max_connections = 1000/g' /etc/postgresql/11/main/postgresql.conf
@@ -33,7 +33,7 @@ RUN cd /home/osm && tar -xvzf openstreetmap-carto.tgz
 
 RUN sed -i 's/URI=\/osm_tiles\//URI=\//g' /usr/local/etc/renderd.conf && sed -i 's/XML=\/home\/jburgess\/osm\/svn\.openstreetmap\.org\/applications\/rendering\/mapnik\/osm\-local\.xml/XML=\/home\/osm\/openstreetmap-carto\/style.xml/' /usr/local/etc/renderd.conf && sed -i 's/HOST=tile\.openstreetmap\.org/HOST=localhost/' /usr/local/etc/renderd.conf && sed -i 's/plugins_dir=\/usr\/lib\/mapnik\/input/plugins_dir=\/usr\/lib\/mapnik\/3.0\/input\//' /usr/local/etc/renderd.conf && cat /usr/local/etc/renderd.conf | grep -v ';' > /usr/local/etc/renderd.conf.new && mv /usr/local/etc/renderd.conf /usr/local/etc/renderd.conf.bak && mv /usr/local/etc/renderd.conf.new /usr/local/etc/renderd.conf && chmod a+x /etc/init.d/renderd && sed -i 's/DAEMON=\/usr\/bin\/$NAME/DAEMON=\/usr\/local\/bin\/$NAME/' /etc/init.d/renderd && sed -i 's/DAEMON_ARGS=""/DAEMON_ARGS=" -c \/usr\/local\/etc\/renderd.conf"/' /etc/init.d/renderd && sed -i 's/RUNASUSER=www-data/RUNASUSER=osm/' /etc/init.d/renderd && ln -s /usr/local/etc/renderd.conf /etc/renderd.conf
 
-RUN mkdir -p /var/lib/mod_tile/default && chown osm:osm -R /var/lib/mod_tile && chmod 777 /var/lib/mod_tile
+RUN mkdir -p /var/lib/mod_tile/default && chown osm:osm -R /var/lib/mod_tile && chmod 777 -R /var/lib/mod_tile
 
 RUN echo "LoadModule tile_module /usr/lib/apache2/modules/mod_tile.so" > /etc/apache2/mods-available/tile.load && ln -s /etc/apache2/mods-available/tile.load /etc/apache2/mods-enabled/
 RUN cp /home/osm/mod_tile/src/.libs/mod_tile.so /usr/lib/apache2/modules/mod_tile.so && ldconfig -v
