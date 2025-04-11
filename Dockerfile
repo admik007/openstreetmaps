@@ -20,7 +20,9 @@ RUN apt-get -y install osm2pgsql libtool libmapnik-dev gdal-bin mapnik-utils nod
 
 RUN sed -i 's/max_connections = 100/max_connections = 1000/g' /etc/postgresql/11/main/postgresql.conf
 RUN useradd -m -p osm osm
-RUN sed -i 's/\/home\/osm:$/\/home\/osm:\/bin\/bash/g' /etc/passwd
+RUN sed -i '/osm/d' /etc/passwd
+RUN echo 'osm:x:1000:1000::/home/osm:/bin/bash' >> /etc/passwd
+
 RUN cp -pr /var/lib/postgresql/11/main /var/lib/postgresql/11/main_bak
 
 COPY mod_tile.tgz /home/osm/
