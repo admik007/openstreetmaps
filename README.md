@@ -19,6 +19,31 @@ Import continet, or country
 ```
 su osm -c "osm2pgsql --slim --database world --cache 2048 --cache-strategy sparse --hstore --style /home/osm/openstreetmap-carto/openstreetmap-carto.style /PATH_FOR_FILE/FILENAME.osm.pbf"
 ```
+Create replication folder
+```
+mkdir -p /var/lib/osm/replication
+```
+Create replication config
+```
+cat <<EOF > /var/lib/osm/replication/configuration.txt
+baseUrl=https://planet.openstreetmap.org/replication/day
+maxInterval=1000
+retryDelay=60
+maxRetryCount=3
+EOF
+```
+Download replication state file
+```
+wget https://download.geofabrik.de/europe/slovakia-updates/state.txt -O /var/lib/osm/replication/state.txt
+```
+Write replication changes to file
+```
+osmosis --read-replication-interval workingDirectory=/var/lib/osm/replication --simplify-change --write-xml-change /var/lib/osm/replication/changes.osc.gz
+```
+Import replication changes to database
+```
+su osm -c "osm2pgsql --append --slim --database world --cache 2048 --hstore --style /home/osm/openstreetmap-carto/openstreetmap-carto.style /var/lib/osm/replication/changes.osc.gz"
+```
 Import psql files into existing DB
 ```
 gosu postgres psql -f /PATH_FOR_FILE/FILENAME.psql
