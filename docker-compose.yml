@@ -1,0 +1,28 @@
+version: '2'
+networks:
+   docker0:
+     driver: bridge
+     driver_opts:
+       com.docker.network.bridge.name: "compose0"
+       com.docker.network.enable_ipv6: "false"
+       com.docker.network.bridge.enable_ip_masquerade: "true"
+     ipam:
+       driver: default
+       config:
+       - subnet: 172.20.0.0/24
+         gateway: 172.20.0.1
+
+services:
+   osm_planet:
+     container_name: osm_planet
+     restart: always
+     image: admik/openstreetmaps:D10
+     hostname: osm_planet
+     networks:
+       docker0:
+         ipv4_address: 172.20.0.200
+     volumes:
+       - /docker/osm_planet/psql_data:/var/lib/postgresql/11/main:Z
+       - /docker/osm_planet/html:/var/www/html:Z
+     ports:
+       - "8080:80"
